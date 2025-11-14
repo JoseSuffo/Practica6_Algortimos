@@ -2,48 +2,36 @@ package Ordenamientos;
 
 public class Ordenamiento {
     public Ordenamiento() {
-
     }
 
-    public void quicksort(int[] a){
-        recursivo(a, 0, a.length-1);
+    //Método auxiliar para ordenamiento Quicksort
+    public void quicksort(int[] array) {
+        if (array == null || array.length == 0) return;
+        recursivo(array, 0, array.length - 1);
     }
 
-    public void recursivo(int[]a, int ini, int fin){
-        int izq=ini;
-        int der=fin;
-        int pos=ini;
-        boolean band=true;
-        while(band){
-            band=false;
-            while(a[pos]<=a[der] && pos!=der){
-                der--;
-            }
-            if(pos!=der){
-                int aux=a[pos];
-                a[pos]=a[der];
-                a[der]=aux;
-                pos=der;
-            }
-            while(a[pos]>=a[izq] && pos!=izq){
-                izq++;
-            }
-            if(pos!=izq){
-                int aux=a[pos];
-                a[pos]=a[izq];
-                a[izq]=aux;
-                pos=izq;
-                band=true;
+    //Método de ordenamiento Quicksort
+    private void recursivo(int[] array, int izquierda, int derecha) {
+        if (izquierda >= derecha || array.length == 0) return;
+
+        int pivote = array[(izquierda + derecha) / 2];
+        int i = izquierda, j = derecha;
+        while (i <= j) {
+            while (array[i] < pivote) i++;
+            while (array[j] > pivote) j--;
+            if (i <= j) {
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+                i++;
+                j--;
             }
         }
-        if(pos-1>ini){
-            recursivo(a,ini,pos-1);
-        }
-        if(pos+1<fin){
-            recursivo(a,pos+1,fin);
-        }
+        if (izquierda < j) recursivo(array, izquierda, j);
+        if (i < derecha) recursivo(array, i, derecha);
     }
 
+    //Método de ordenamiento MergeSort
     public void merge(int[] arr, int l, int m, int r){
         int n1 = m - l + 1;
         int n2 = r - m;
@@ -82,6 +70,7 @@ public class Ordenamiento {
         }
     }
 
+    //Método auxiliar para ordenamiento Mergesort
     public void mergeSort(int[] arr, int l, int r){
         if (l < r) {
             int m = l + (r - l) / 2;
@@ -91,6 +80,7 @@ public class Ordenamiento {
         }
     }
 
+    //Método de ordenamiento ShellSort
     public void shellSort(int[] a){
         int inter=a.length+1;
         while(inter>1){
@@ -112,6 +102,7 @@ public class Ordenamiento {
         }
     }
 
+    //Método de ordenamiento Selección Directa
     public void seleccionDirecta(int[] a){
         for(int i=0; i<a.length-1; i++){
             int menor=a[i];
@@ -127,6 +118,7 @@ public class Ordenamiento {
         }
     }
 
+    //Método de ordenamiento CountingSort
     public static void countingSort(int[] array, int posicion) {
         int tamanio = array.length;
         int[] salida = new int[tamanio];
@@ -152,13 +144,31 @@ public class Ordenamiento {
         }
     }
 
+    //Método de ordenamiento RadixSort
     public void radixSort(int[] array) {
+        if (array.length == 0) return;
+        int min = array[0];
+        for (int val : array) if (val < min) min = val;
+
+        if (min < 0) {
+            for (int i = 0; i < array.length; i++) {
+                array[i] -= min;
+            }
+        }
+
         int elementoMax = obtenerMax(array);
         for (int posicion = 1; elementoMax / posicion > 0; posicion *= 10) {
             countingSort(array, posicion);
         }
+
+        if (min < 0) {
+            for (int i = 0; i < array.length; i++) {
+                array[i] += min;
+            }
+        }
     }
 
+    //Método auxiliar para ordenamiento RadixSort
     public int obtenerMax(int[] array) {
         int max = array[0];
         for (int i = 1; i < array.length; i++) {
@@ -167,5 +177,14 @@ public class Ordenamiento {
             }
         }
         return max;
+    }
+
+    //Métodos de ordenamientos llamados desde Java
+    public void sort(int[] a) {
+        java.util.Arrays.sort(a);
+    }
+
+    public void parallelSort(int[] a) {
+        java.util.Arrays.parallelSort(a);
     }
 }

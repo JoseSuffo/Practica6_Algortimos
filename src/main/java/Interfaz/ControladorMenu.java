@@ -13,19 +13,16 @@ public class ControladorMenu {
     //Creación del evento al presionar el boton Jugar
     @FXML
     public void botonIniciar(ActionEvent actionEvent) {
-        //Se crea la ventana y una instancia del controlador del tablero
-        BorderPane ventana = new BorderPane();
-        ControladorOrdenamientos controlador = new ControladorOrdenamientos(ventana);
-
-        //Se crea la escena del tablero y se muestra
-        Scene simulador = new Scene(ventana, 800, 800);
         Stage stage = new Stage();
-        stage.setScene(simulador);
-        stage.setResizable(false);
+        ControladorOrdenamientos controlador = new ControladorOrdenamientos();
+
+        controlador.iniciar(stage);
         stage.setTitle("Sistema de Ordenamientos: Guasavito");
+        stage.setMaximized(true);
+        stage.setResizable(true);
         stage.show();
 
-        //Se cierra la ventana actual del menú
+        // Cerrar la ventana actual del menú
         Node node = (Node) actionEvent.getSource();
         Stage actual = (Stage) node.getScene().getWindow();
         actual.close();

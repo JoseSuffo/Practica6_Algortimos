@@ -13,8 +13,6 @@ module com.example.practica6_algoritmos {
     requires javafx.graphics;
     requires javafx.base;
 
-    opens com.example.practica6_algoritmos to javafx.fxml;
-    exports com.example.practica6_algoritmos;
     exports Interfaz;
     opens Interfaz to javafx.fxml;
 }
